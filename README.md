@@ -1,7 +1,9 @@
 # urlscan-api
 ###### Created by: [blurpesec](https://twitter.com/blurpesec)
 
-An API wrapper for urlscan.io
+An API wrapper for [urlscan.io](https://urlscan.io)
+
+On npm: https://www.npmjs.com/package/urlscan-api
 
 ---
 
