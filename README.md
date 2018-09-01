@@ -7,11 +7,11 @@ An API wrapper for urlscan.io
 
 ### Usage
 
-* [submit( APIKEY, url )](#To-submit-urls:)
-* [result( uuid )](#To-search-for-results:)
-* [searchdomain( hostname )](#To-search-for-a-domain:)
-* [searchfilename( filename )](#To-search-fo-a-filename:)
-* [searchip( ip )](#To-search-for-an-ip:)
+- [submit( APIKEY, url )](#to-submit-urls)
+- [result( uuid )](#to-search-for-results)
+- [searchdomain( hostname )](#to-search-for-a-domain)
+- [searchfilename( filename )](#to-search-for-a-filename)
+- [searchip( ip )](#to-search-for-an-ip)
 
 #### To submit urls:
 ###### Note - There is a rate-limit on submitting urls. Please wait 2 seconds between consecutive submission requests
@@ -107,7 +107,7 @@ new urlscan().searchfilename( filename ).then( function( searchoutput ) {
 } )
 ```
 
-#### To search for anip:
+#### To search for an ip:
 ```
 /* params:
 *  ip       - Can follow the following formats:
