@@ -12,6 +12,8 @@ An API wrapper for urlscan.io
 - [searchdomain( hostname )](#to-search-for-a-domain)
 - [searchfilename( filename )](#to-search-for-a-filename)
 - [searchip( ip )](#to-search-for-an-ip)
+- [downloadscreenshot( uuid, savefilename )](#to-download-a-screenshot)
+- [downloaddom( uuid, savefilename )](#to-download-dom)
 
 #### See the [Implementations Directory](https://github.com/hahnmichaelf/urlscan-api/wiki/Implementations) for further implementations
 
@@ -132,6 +134,76 @@ new urlscan().searchip( ip ).then( function( searchoutput ) {
         {
             statusCode: 400,
             message: 'Unable to query the request "ip"'
+        }
+    */
+} )
+```
+
+#### To download a screenshot:
+```
+/* params:
+*  uuid         - UUID given when a domain is submitted.
+*  savefilename - Name of file to save the screenshot as.              
+*/
+
+const urlscan = require('urlscan-api')
+new urlscan().downloadscreenshot( uuid, savefilename ).then( function( downloadstatus ) {
+    console.log(JSON.stringify(downloadstatus, null, 4))
+    // If the UUID was invalid, it will save the wrong screenshot file.
+    // If the filename you specify already exists:
+    /*
+        {
+            statusCode: 409,
+            message: 'Location you are trying to save to already exists.'
+        }
+    */
+    // If the download completes successfully:
+    /*
+        {
+            statusCode: 200,
+            message: 'Completed Successfully.'
+        }
+    */
+} )
+```
+
+#### To download DOM:
+```
+/* params:
+*  uuid         - UUID given when a domain is submitted.
+*  savefilename - Name of file to save the DOM to.              
+*/
+
+const urlscan = require('urlscan-api')
+new urlscan().downloaddom( uuid, savefilename ).then( function( downloadstatus ) {
+    console.log(JSON.stringify(downloadstatus, null, 4))
+    // If the UUID was invalid, it will save the wrong DOM into the specifiedfile.
+    // If the filename you specify already exists:
+    /*
+        {
+            statusCode: 409,
+            message: 'Location you are trying to save to already exists.'
+        }
+    */
+    // If the download failed due to issue decoding gzip:
+    /*
+        {
+            error: error,
+            message: 'Error in decoding gzip file.'
+        }
+    */
+    // If the download fails due to issue writing to file:
+    /*
+        {
+            error: error,
+            message: 'Error in writing DOM to file.'
+        }
+    */
+    // If the download completes successfully:
+    /*
+        {
+            statusCode: 200,
+            message: 'Completed Successfully.'
         }
     */
 } )

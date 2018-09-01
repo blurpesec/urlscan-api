@@ -1,4 +1,7 @@
 const req = require('request')
+const downloadscreenshot = require('./utils/downloadscreenshot.js')
+const fs = require('fs')
+const zlib = require('zlib')
 
 let APIKEY = 0
 
@@ -131,6 +134,67 @@ class urlscan {
               });
         });
     }
+
+    downloadscreenshot( uuid, savefilename ) {
+        return new Promise(function(resolve, reject) {
+            let options = {
+                uri: 'https://urlscan.io/screenshots/' + uuid + '.png',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            }
+            if( fs.existsSync(savefilename) ) {
+                resolve({'statusCode': 409, 'message': 'Location you are trying to save to already exists.'})
+            }
+            else {
+                let out = downloadscreenshot( uuid, savefilename, options )
+                resolve(out)
+            }
+        });
+    }
+    downloaddom( uuid, savefilename ) {
+        return new Promise(function(resolve, reject) {
+            let options = {
+                uri: 'http://urlscan.io/dom/' + uuid + '/',
+                encoding: null,
+                headers: {
+                    'Content-Type': 'request'
+                },
+            }
+            if( fs.existsSync(savefilename) ) {
+                resolve({'statusCode': 409, 'message': 'Location you are trying to save to already exists.'})
+            }
+            else {
+                req( options, function(error, response, body) {
+                    if( response.headers['content-encoding'] == 'gzip' ) {
+                        zlib.gunzip(body, function(error, output) {
+                            if( error ) {
+                                resolve({'error': error, 'message': 'Error in decoding gzip file.'})
+                            }
+                            fs.writeFileSync(savefilename, output.toString(), function(error){
+                                if( error ) {
+                                    resolve({'error': error, 'message': 'Error in writing DOM to file.'})
+                                }
+                                resolve({'statusCode': 200, 'message': 'Completed successfully'})
+                            })
+
+                        })
+                    }
+                    else {
+                        fs.writeFileSync(savefilename, body, function(error){
+                            if( error ) {
+                                resolve({'error': error, 'message': 'Error in writing DOM to file.'})
+                            }
+                            resolve({'statusCode': 200, 'message': 'Completed successfully'})
+                        })
+                    }
+                })
+
+            }
+        });
+    }
+
+
 
 }
 

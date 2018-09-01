@@ -1,6 +1,6 @@
 {
   "name": "urlscan-api",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Urlscan.io API Wrapper",
   "main": "urlscan.js",
   "scripts": {
@@ -24,6 +24,8 @@
   },
   "homepage": "https://github.com/hahnmichaelf/urlscan-api#readme",
   "dependencies": {
-    "request": "^2.88.0"
+    "fs": "0.0.1-security",
+    "request": "^2.88.0",
+    "zlib": "^1.0.5"
   }
 }

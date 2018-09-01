@@ -66,4 +66,15 @@ test_searchip = (ip) => {
 };
 
 //test_submit(APIKEY, domaintosubmit)
-test_searchdomain('mycrypto.com')
+//test_searchdomain('mycrypto.com')
+test_downloadscreenshot = (uuid, filename) => {
+    new urlscan().downloadscreenshot(uuid, filename).then( function( downloadstatus ) {
+        console.log(JSON.stringify(downloadstatus, null, 2))
+    } )
+}
+test_downloaddom = (uuid, filename) => {
+    new urlscan().downloaddom(uuid, filename).then( function( downloadstatus ) {
+        console.log(JSON.stringify(downloadstatus, null, 2))
+    } )
+}
+//test_downloadscreenshot('5a2a54ae-cda3-4a7b-a70a-8a5ce386b549', 'mycrypto.png')
