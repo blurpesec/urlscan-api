@@ -46,7 +46,6 @@ test_searchfilename = (filename) => {
         new urlscan().searchfilename(filename).then( function( searchfilenameresult ) {
             if (searchfilenameresult.statusCode != 404) {
                 console.log('Test 4 Success.')
-                console.log(JSON.stringify(JSON.parse(searchfilenameresult), null, 2))
                 clearInterval(searchfilenamewait)
              }
         } )
@@ -59,7 +58,6 @@ test_searchip = (ip) => {
         new urlscan().searchip(ip).then( function( searchipresult ) {
             if (searchipresult.statusCode != 404) {
                 console.log('Test 4 Success.')
-                console.log(JSON.stringify(JSON.parse(searchipresult), null, 2))
                 clearInterval(searchipwait)
              }
         } )

@@ -54,7 +54,6 @@ class urlscan {
 
     searchfilename( filename ) {
         return new Promise(function(resolve, reject) {
-            console.log('started resultdom')
             let options = {
                 uri: 'https://urlscan.io/api/v1/search/?q=filename:' + filename,
                 headers: {
