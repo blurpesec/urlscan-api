@@ -41,12 +41,15 @@ class urlscan {
             let result = req(options, function(e, response, body) {
                 if(e || !([200, 301, 302, 400].includes(response.statusCode))) {
                     if (response.statusCode === 400) {
-                        resolve(body)
+                        resolve(JSON.parse(body))
                     }
                     resolve({'statusCode': response.statusCode, 'message': 'Scan not completed yet.'})
                 }
                 else if(!e && response.statusCode == 200){
                     resolve(JSON.parse(body))
+                }
+                else {
+                    resolve({'statusCode': response.statusCode, 'message': 'Scan not completed yet.'})
                 }
             });
       });
@@ -63,12 +66,15 @@ class urlscan {
             let result = req(options, function(e, response, body) {
                 if(e || !([200, 301, 302, 400].includes(response.statusCode))) {
                     if (response.statusCode === 400) {
-                        resolve(body)
+                        resolve(JSON.parse(body))
                     }
                     resolve({'statusCode': response.statusCode, 'message': 'Unable to query for "' + filename + '".'})
                 }
                 else if(!e && response.statusCode == 200){
-                    resolve(body)
+                    resolve(JSON.parse(body))
+                }
+                else {
+                    resolve({'statusCode': response.statusCode, 'message': 'Unable to query for "' + filename + '".'})
                 }
             });
         });
@@ -85,12 +91,17 @@ class urlscan {
               let result = req(options, function(e, response, body) {
                   if(e || !([200, 301, 302, 400].includes(response.statusCode))) {
                       if (response.statusCode === 400) {
-                          resolve(body)
+                          resolve(JSON.parse(body))
                       }
-                      resolve({'statusCode': response.statusCode, 'message': 'Unable to query for "' + domain + '". Domain searches should not contain https:// or http:// protocols'})
+                      resolve({'statusCode': response.statusCode, 'message': 'Unable to query for "'
+                      + domain + '". Domain searches should not contain https:// or http:// protocols'})
                   }
                   else if(!e && response.statusCode == 200){
-                      resolve(body)
+                      resolve(JSON.parse(body))
+                  }
+                  else {
+                      resolve({'statusCode': response.statusCode, 'message': 'Unable to query for "'
+                      + domain + '". Domain searches should not contain https:// or http:// protocols'})
                   }
               });
         });
@@ -107,12 +118,15 @@ class urlscan {
               let result = req(options, function(e, response, body) {
                   if(e || !([200, 301, 302, 400].includes(response.statusCode))) {
                       if (response.statusCode === 400) {
-                          resolve(body)
+                          resolve(JSON.parse(body))
                       }
                       resolve({'statusCode': response.statusCode, 'message': 'Unable to query for "' + ip + '".'})
                   }
                   else if(!e && response.statusCode == 200){
-                      resolve(body)
+                      resolve(JSON.parse(body))
+                  }
+                  else {
+                      resolve({'statusCode': response.statusCode, 'message': 'Unable to query for "' + ip + '".'})
                   }
               });
         });

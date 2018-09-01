@@ -1,4 +1,4 @@
-const urlscan = require('urlscan-api')
+const urlscan = require('../urlscan.js')
 const config = require('../config.js')
 const APIKEY = config.APIKEY
 const domaintosubmit = 'https://mycrypto.com'
@@ -31,13 +31,14 @@ test_searchdomain = (domaintosearch, uuid) => {
     console.log('Testing `urlscan.searchdomain( domain )`: Test 3')
     var searchwait = setInterval(function() {
         new urlscan().searchdomain(domaintosearch).then( function( searchoutput ) {
+            console.log(searchoutput)
             if (searchoutput.statusCode != 404) {
                 console.log('Test 3 Success.')
                 clearInterval(searchwait)
-                test_resultdom(uuid)
+                //test_resultdom(uuid)
              }
         } )
-    }, 2 * 1000) // re-check every 1 second
+    }, 1 * 1000) // re-check every 1 second
 };
 
 test_searchfilename = (filename) => {
@@ -65,4 +66,4 @@ test_searchip = (ip) => {
 };
 
 //test_submit(APIKEY, domaintosubmit)
-test_searchip('2400:cb00:2048:1::681b:9cb9')
+test_searchdomain('mycrypto.com')

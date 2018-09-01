@@ -13,6 +13,8 @@ An API wrapper for urlscan.io
 - [searchfilename( filename )](#to-search-for-a-filename)
 - [searchip( ip )](#to-search-for-an-ip)
 
+#### See the [Implementations Directory](https://github.com/hahnmichaelf/urlscan-api/wiki/Implementations) for further implementations
+
 #### To submit urls:
 ###### Note - There is a rate-limit on submitting urls. Please wait 2 seconds between consecutive submission requests
 ```
@@ -24,6 +26,7 @@ const urlscan = require('urlscan-api')
 new urlscan().submit( APIKEY, url ).then( function( submitoutput ) {
     // Returns a promise containing the JSON returned from the site after submission.
     // An example:
+    console.log(JSON.stringify(submitoutput, null, 4))
     /*
         {
             "message": "Submission successful",
@@ -55,6 +58,7 @@ new urlscan().submit( APIKEY, url ).then( function( submitoutput ) {
 
 const urlscan = require('urlscan-api')
 new urlscan().result( uuid ).then( function( resultoutput ) {
+    console.log(JSON.stringify(resultoutput, null, 4))
     // Returns a promise containing the JSON return from the site
     // An example of a successful output: https://urlscan.io/result/aaecebf6-3085-49fd-9fd6-53ef658aaa96/
     // If the scan has not completed it returns a JSON file as follows:
@@ -75,6 +79,7 @@ new urlscan().result( uuid ).then( function( resultoutput ) {
 
 const urlscan = require('urlscan-api')
 new urlscan().searchdomain( hostname ).then( function( searchoutput ) {
+    console.log(JSON.stringify(searchoutput, null, 4))
     // JSON return from the site containing a an array of results
     // An example of a successful output: https://urlscan.io/api/v1/search/?q=domain:mycrypto.com
     // If the queried domain was invalid, returns the following
@@ -90,11 +95,12 @@ new urlscan().searchdomain( hostname ).then( function( searchoutput ) {
 #### To search for a filename:
 ```
 /* params:
-*  hostname  - This needs to have no http:// or https:// protocols in it.
+*  filename - Filename to search for
 */
 
 const urlscan = require('urlscan-api')
 new urlscan().searchfilename( filename ).then( function( searchoutput ) {
+    console.log(JSON.stringify(searchoutput, null, 4))
     // JSON return from the site containing a an array of results
     // An example of a successful output: https://urlscan.io/api/v1/search/?q=filename:T1X5ZPT.gif
     // If the queried filename was invalid, returns the following
@@ -118,6 +124,7 @@ new urlscan().searchfilename( filename ).then( function( searchoutput ) {
 
 const urlscan = require('urlscan-api')
 new urlscan().searchip( ip ).then( function( searchoutput ) {
+    console.log(JSON.stringify(searchoutput, null, 4))
     // JSON return from the site containing a an array of results
     // An example of a successful output: https://urlscan.io/api/v1/search/?q=ip:%222400:cb00:2048:1::681b:9cb9%22
     // If the queried filename was invalid, returns the following
