@@ -7,15 +7,11 @@ An API wrapper for urlscan.io
 
 ### Usage
 
-* [submit( APIKEY, url )](#To submit urls:)
-
-* [result( uuid )](#To search for results:)
-
-* [searchdomain( hostname )](#To search for a domain:)
-
-* [searchfilename( filename )](#To search for a filename:)
-
-* [searchip( ip )](#To search for an ip:)
+* [submit( APIKEY, url )](#To-submit-urls:)
+* [result( uuid )](#To-search-for-results:)
+* [searchdomain( hostname )](#To-search-for-a-domain:)
+* [searchfilename( filename )](#To-search-fo-a-filename:)
+* [searchip( ip )](#To-search-for-an-ip:)
 
 #### To submit urls:
 ###### Note - There is a rate-limit on submitting urls. Please wait 2 seconds between consecutive submission requests
