@@ -1,0 +1,29 @@
+{
+  "name": "urlscan-api",
+  "version": "0.0.1",
+  "description": "Urlscan.io API Wrapper",
+  "main": "urlscan.js",
+  "scripts": {
+    "test": "node ./examples/test.js --trace-warnings"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hahnmichaelf/urlscan-api.git"
+  },
+  "keywords": [
+    "urlscan.io",
+    "urlscan",
+    "api",
+    "wrapper",
+    "url"
+  ],
+  "author": "blurpesec",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hahnmichaelf/urlscan-api/issues"
+  },
+  "homepage": "https://github.com/hahnmichaelf/urlscan-api#readme",
+  "dependencies": {
+    "request": "^2.88.0"
+  }
+}
