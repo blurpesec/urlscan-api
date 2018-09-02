@@ -7,6 +7,8 @@ let APIKEY = 0
 
 class urlscan {
 
+    /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Submit Module ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
     submit( APIKEY, domain ) {
         return new Promise(function(resolve, reject) {
             let options = {
@@ -33,6 +35,8 @@ class urlscan {
       });
     }
 
+    /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Result Module ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
     result( UUID ) {
         return new Promise(function(resolve, reject) {
             let options = {
@@ -58,6 +62,8 @@ class urlscan {
       });
     }
 
+    /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Search Modules ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
     searchfilename( filename ) {
         return new Promise(function(resolve, reject) {
             let options = {
@@ -67,18 +73,15 @@ class urlscan {
                 }
             }
             let result = req(options, function(e, response, body) {
-                if(e || !([200, 301, 302, 400].includes(response.statusCode))) {
-                    if (response.statusCode === 400) {
+                if( response.statusCode == 200 ) {
+              		if( JSON.parse(body).total != 0 ) {
                         resolve(JSON.parse(body))
-                    }
-                    resolve({'statusCode': response.statusCode, 'message': 'Unable to query for "' + filename + '".'})
-                }
-                else if(!e && response.statusCode == 200){
-                    resolve(JSON.parse(body))
-                }
+              		}
+                    resolve({'statusCode': 404, 'message': 'Failed to find what you were searching for.', 'total': 0, 'input': filename})
+              	}
                 else {
-                    resolve({'statusCode': response.statusCode, 'message': 'Unable to query for "' + filename + '".'})
-                }
+              	     resolve({'statusCode': 404, 'message': 'Failed to find what you were searching for.', 'total': 0, 'input': filename})
+              	}
             });
         });
     }
@@ -92,19 +95,14 @@ class urlscan {
                   },
               }
               let result = req(options, function(e, response, body) {
-                  if(e || !([200, 301, 302, 400].includes(response.statusCode))) {
-                      if (response.statusCode === 400) {
+                  if( response.statusCode == 200 ) {
+                      if( JSON.parse(body).total != 0 ) {
                           resolve(JSON.parse(body))
                       }
-                      resolve({'statusCode': response.statusCode, 'message': 'Unable to query for "'
-                      + domain + '". Domain searches should not contain https:// or http:// protocols'})
-                  }
-                  else if(!e && response.statusCode == 200){
-                      resolve(JSON.parse(body))
+                      resolve({'statusCode': 404, 'message': 'Failed to find what you were searching for.', 'total': 0, 'input': domain})
                   }
                   else {
-                      resolve({'statusCode': response.statusCode, 'message': 'Unable to query for "'
-                      + domain + '". Domain searches should not contain https:// or http:// protocols'})
+                	  resolve({'statusCode': 404, 'message': 'Failed to find what you were searching for.', 'total': 0, 'input': domain})
                   }
               });
         });
@@ -119,21 +117,108 @@ class urlscan {
                   },
               }
               let result = req(options, function(e, response, body) {
-                  if(e || !([200, 301, 302, 400].includes(response.statusCode))) {
-                      if (response.statusCode === 400) {
-                          resolve(JSON.parse(body))
-                      }
-                      resolve({'statusCode': response.statusCode, 'message': 'Unable to query for "' + ip + '".'})
-                  }
-                  else if(!e && response.statusCode == 200){
-                      resolve(JSON.parse(body))
-                  }
-                  else {
-                      resolve({'statusCode': response.statusCode, 'message': 'Unable to query for "' + ip + '".'})
-                  }
+                if( response.statusCode == 200 ) {
+                    if( JSON.parse(body).total != 0 ) {
+                        resolve(JSON.parse(body))
+                    }
+                    resolve({'statusCode': 404, 'message': 'Failed to find what you were searching for.', 'total': 0, 'input': ip})
+                }
+                else {
+                     resolve({'statusCode': 404, 'message': 'Failed to find what you were searching for.', 'total': 0, 'input': ip})
+                }
               });
         });
     }
+
+    searchasn( asn ) {
+          return new Promise(function(resolve, reject) {
+              let options = {
+                  uri: 'https://urlscan.io/api/v1/search/?q=asn:"' + asn + '"',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+              }
+              let result = req(options, function(e, response, body) {
+                if( response.statusCode == 200 ) {
+              		if( JSON.parse(body).total != 0 ) {
+                        resolve(JSON.parse(body))
+              		}
+                    resolve({'statusCode': 404, 'message': 'Failed to find what you were searching for.', 'total': 0, 'input': asn})
+              	}
+                else {
+              	     resolve({'statusCode': 404, 'message': 'Failed to find what you were searching for.', 'total': 0, 'input': asn})
+              	}
+              });
+        });
+    }
+
+    searchasnname( asnname ) {
+          return new Promise(function(resolve, reject) {
+              let options = {
+                  uri: 'https://urlscan.io/api/v1/search/?q=asnname:"' + asnname + '"',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+              }
+              let result = req(options, function(e, response, body) {
+                if( response.statusCode == 200 ) {
+                    if( JSON.parse(body).total != 0 ) {
+                        resolve(JSON.parse(body))
+                    }
+                    resolve({'statusCode': 404, 'message': 'Failed to find what you were searching for.', 'total': 0, 'input': asnname})
+                }
+                else {
+                     resolve({'statusCode': 404, 'message': 'Failed to find what you were searching for.', 'total': 0, 'input': asnname})
+                }
+              });
+        });
+    }
+
+    searchfilehash( filehash ) {
+          return new Promise(function(resolve, reject) {
+              let options = {
+                  uri: 'https://urlscan.io/api/v1/search/?q=hash:"' + filehash + '"',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+              }
+              let result = req(options, function(e, response, body) {
+                if( response.statusCode == 200 ) {
+                    if( JSON.parse(body).total != 0 ) {
+                        resolve(JSON.parse(body))
+                    }
+                    resolve({'statusCode': 404, 'message': 'Failed to find what you were searching for.', 'total': 0, 'input': filehash})
+                }
+                else {
+                     resolve({'statusCode': 404, 'message': 'Failed to find what you were searching for.', 'total': 0, 'input': filehash})
+                }
+              });
+        });
+    }
+
+    searchserver( server ) {
+          return new Promise(function(resolve, reject) {
+              let options = {
+                  uri: 'https://urlscan.io/api/v1/search/?q=server:"' + server + '"',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+              }
+              let result = req(options, function(e, response, body) {
+                if( response.statusCode == 200 ) {
+                    if( JSON.parse(body).total != 0 ) {
+                        resolve(JSON.parse(body))
+                    }
+                    resolve({'statusCode': 404, 'message': 'Failed to find what you were searching for.', 'total': 0, 'input': server})
+                }
+                else {
+                     resolve({'statusCode': 404, 'message': 'Failed to find what you were searching for.', 'total': 0, 'input': server})
+                }
+              });
+        });
+    }
+
+    /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Download Modules ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
     downloadscreenshot( uuid, savefilename ) {
         return new Promise(function(resolve, reject) {
@@ -193,8 +278,6 @@ class urlscan {
             }
         });
     }
-
-
 
 }
 
