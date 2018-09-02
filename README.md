@@ -8,16 +8,24 @@ On npm: https://www.npmjs.com/package/urlscan-api
 ---
 
 ### Usage
+- [Submission and results](#submission-and-results)
+    - [submit( APIKEY, url )](#to-submit-urls)
+    - [result( uuid )](#to-search-for-results)
+- [Searches](#searches)
+    - [searchdomain( hostname )](#to-search-for-a-domain)
+    - [searchfilename( filename )](#to-search-for-a-filename)
+    - [searchip( ip )](#to-search-for-an-ip)
+    - [searchasn( asn )](#to-search-for-an-asn)
+    - [searchasnname( asnname )](#to-search-for-an-asnname)
+    - [searchfilehash( filehash )](#to-search-for-a-filehash)
+    - [searchserver( server )](#to-search-for-a-server)    
+- [Downloads](#downloads)
+    - [downloadscreenshot( uuid, savefilename )](#to-download-a-screenshot)
+    - [downloaddom( uuid, savefilename )](#to-download-dom)
 
-- [submit( APIKEY, url )](#to-submit-urls)
-- [result( uuid )](#to-search-for-results)
-- [searchdomain( hostname )](#to-search-for-a-domain)
-- [searchfilename( filename )](#to-search-for-a-filename)
-- [searchip( ip )](#to-search-for-an-ip)
-- [downloadscreenshot( uuid, savefilename )](#to-download-a-screenshot)
-- [downloaddom( uuid, savefilename )](#to-download-dom)
+#### See the [Implementations Directory](https://github.com/hahnmichaelf/urlscan-api/wiki/Implementations) for further custom implementations [WIP]
 
-#### See the [Implementations Directory](https://github.com/hahnmichaelf/urlscan-api/wiki/Implementations) for further implementations
+### Submission and Results
 
 #### To submit urls:
 ###### Note - There is a rate-limit on submitting urls. Please wait 2 seconds between consecutive submission requests
@@ -54,6 +62,7 @@ new urlscan().submit( APIKEY, url ).then( function( submitoutput ) {
 } )
 ```
 
+
 #### To search for results:
 ```
 /* params:
@@ -75,6 +84,10 @@ new urlscan().result( uuid ).then( function( resultoutput ) {
 } )
 ```
 
+-----
+
+### Searches
+
 #### To search for a domain:
 ```
 /* params:
@@ -89,8 +102,10 @@ new urlscan().searchdomain( hostname ).then( function( searchoutput ) {
     // If the queried domain was invalid, returns the following
     /*
         {
-            statusCode: 400,
-            message: 'Unable to query the request "https://mycrypto.com". Domain searches should not contain https:// or http:// protocols.'
+            "statusCode": 404,
+            "message": "Failed to find what you were searching for.",
+            "total": 0,
+            "input": "mycrtyptoqkladsjadsac.salt"
         }
     */
 } )
@@ -110,8 +125,10 @@ new urlscan().searchfilename( filename ).then( function( searchoutput ) {
     // If the queried filename was invalid, returns the following
     /*
         {
-            statusCode: 400,
-            message: 'Unable to query the request "filename"'
+            "statusCode": 404,
+            "message": "Failed to find what you were searching for.",
+            "total": 0,
+            "input": "blanktextfile.txt"
         }
     */
 } )
@@ -131,16 +148,113 @@ new urlscan().searchip( ip ).then( function( searchoutput ) {
     console.log(JSON.stringify(searchoutput, null, 4))
     // JSON return from the site containing a an array of results
     // An example of a successful output: https://urlscan.io/api/v1/search/?q=ip:%222400:cb00:2048:1::681b:9cb9%22
-    // If the queried filename was invalid, returns the following
+    // If the queried ip was invalid, returns the following
     /*
         {
-            statusCode: 400,
-            message: 'Unable to query the request "ip"'
+            "statusCode": 404,
+            "message": "Failed to find what you were searching for.",
+            "total": 0,
+            "input": "299.29912.22414.122"
         }
     */
 } )
 ```
 
+#### To search for an asn:
+```
+/* params:
+*  asn       - An example: 'AS24940'
+*/
+
+const urlscan = require('urlscan-api')
+new urlscan().searchasn( asn ).then( function( searchoutput ) {
+    console.log(JSON.stringify(searchoutput, null, 4))
+    // JSON return from the site containing a an array of results
+    // An example of a successful output: https://urlscan.io/api/v1/search/?q=asn:AS24940
+    // If the queried asn was invalid, returns the following
+    /*
+        {
+            "statusCode": 404,
+            "message": "Failed to find what you were searching for.",
+            "total": 0,
+            "input": "BS920301234"
+        }   
+    */
+} )
+```
+
+#### To search for an asnname:
+```
+/* params:
+*  asnname       - An example: 'hetzner'
+*/
+
+const urlscan = require('urlscan-api')
+new urlscan().searchasnname( asnname ).then( function( searchoutput ) {
+    console.log(JSON.stringify(searchoutput, null, 4))
+    // JSON return from the site containing a an array of results
+    // An example of a successful output: https://urlscan.io/api/v1/search/?q=asnname:hetzner
+    // If the queried asnname was invalid, returns the following
+    /*
+        {
+            "statusCode": 404,
+            "message": "Failed to find what you were searching for.",
+            "total": 0,
+            "input": "blahblahblah"
+        }   
+    */
+} )
+```
+
+#### To search for a filehash:
+```
+/* params:
+*  asn       - An example: 'hetzner'
+*/
+
+const urlscan = require('urlscan-api')
+new urlscan().searchfilehash( filehash ).then( function( searchoutput ) {
+    console.log(JSON.stringify(searchoutput, null, 4))
+    // JSON return from the site containing a an array of results
+    // An example of a successful output: https://urlscan.io/api/v1/search/?q=filehash:d699f303990ce9bd7d7c97e9bd3cad6a46ecf2532f475cf22ae58213237821b9
+    // If the queried filehash was invalid, returns the following
+    /*
+        {
+            "statusCode": 404,
+            "message": "Failed to find what you were searching for.",
+            "total": 0,
+            "input": "blahblahblah"
+        }   
+    */
+} )
+```
+
+#### To search for a server:
+```
+/* params:
+*  server       - An example: 'nginx'
+*/
+
+const urlscan = require('urlscan-api')
+new urlscan().searchserver( server ).then( function( searchoutput ) {
+    console.log(JSON.stringify(searchoutput, null, 4))
+    // JSON return from the site containing a an array of results
+    // An example of a successful output: https://urlscan.io/api/v1/search/?q=server:nginx
+    // If the queried server was invalid, returns the following
+    /*
+        {
+            "statusCode": 404,
+            "message": "Failed to find what you were searching for.",
+            "total": 0,
+            "input": "blahblahblah"
+        }   
+    */
+} )
+```
+
+----
+
+### Downloads:
 #### To download a screenshot:
 ```
 /* params:
