@@ -29,7 +29,7 @@ On npm: https://www.npmjs.com/package/urlscan-api
 
 #### To submit urls:
 ###### Note - There is a rate-limit on submitting urls. Please wait 2 seconds between consecutive submission requests
-```
+```javascript
 /* params:
 *  APIKEY   - given from urlscan.io website
 *  url      - url to scan
@@ -64,7 +64,7 @@ new urlscan().submit( APIKEY, url ).then( function( submitoutput ) {
 
 
 #### To search for results:
-```
+```javascript
 /* params:
 *  uuid     - This is returned when submitting to urlscan.io
 */
@@ -89,7 +89,7 @@ new urlscan().result( uuid ).then( function( resultoutput ) {
 ### Searches
 
 #### To search for a domain:
-```
+```javascript
 /* params:
 *  hostname  - This needs to have no http:// or https:// protocol in it. Valid format: `mycrypto.com`.
 */
@@ -112,7 +112,7 @@ new urlscan().searchdomain( hostname ).then( function( searchoutput ) {
 ```
 
 #### To search for a filename:
-```
+```javascript
 /* params:
 *  filename - Filename to search for
 */
@@ -135,7 +135,7 @@ new urlscan().searchfilename( filename ).then( function( searchoutput ) {
 ```
 
 #### To search for an ip:
-```
+```javascript
 /* params:
 *  ip       - Can follow the following formats:
 *               '2400:cb00:2048:1::681b:9cb9',
@@ -161,7 +161,7 @@ new urlscan().searchip( ip ).then( function( searchoutput ) {
 ```
 
 #### To search for an asn:
-```
+```javascript
 /* params:
 *  asn       - An example: 'AS24940'
 */
@@ -184,7 +184,7 @@ new urlscan().searchasn( asn ).then( function( searchoutput ) {
 ```
 
 #### To search for an asnname:
-```
+```javascript
 /* params:
 *  asnname       - An example: 'hetzner'
 */
@@ -207,7 +207,7 @@ new urlscan().searchasnname( asnname ).then( function( searchoutput ) {
 ```
 
 #### To search for a filehash:
-```
+```javascript
 /* params:
 *  asn       - An example: 'hetzner'
 */
@@ -230,7 +230,7 @@ new urlscan().searchfilehash( filehash ).then( function( searchoutput ) {
 ```
 
 #### To search for a server:
-```
+```javascript
 /* params:
 *  server       - An example: 'nginx'
 */
@@ -256,7 +256,7 @@ new urlscan().searchserver( server ).then( function( searchoutput ) {
 
 ### Downloads:
 #### To download a screenshot:
-```
+```javascript
 /* params:
 *  uuid         - UUID given when a domain is submitted.
 *  savefilename - Name of file to save the screenshot as.              
@@ -284,7 +284,7 @@ new urlscan().downloadscreenshot( uuid, savefilename ).then( function( downloads
 ```
 
 #### To download DOM:
-```
+```javascript
 /* params:
 *  uuid         - UUID given when a domain is submitted.
 *  savefilename - Name of file to save the DOM to.              
